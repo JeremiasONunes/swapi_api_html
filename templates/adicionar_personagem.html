@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Personagem Star Wars</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px; /* Espaço abaixo da tabela */
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-voltar, .btn-confirmar {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block; /* Permitir padding e margin */
+        }
+        .btn-voltar:hover, .btn-confirmar:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red; /* Cor para mensagens de erro */
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Personagem Star Wars</h1>
+
+    <form id="cadastro-form">
+        <table>
+            <tr>
+                <th>Campo</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td>Nome</td>
+                <td><input type="text" id="name" required></td>
+            </tr>
+            <tr>
+                <td>Altura</td>
+                <td><input type="number" id="height" required></td>
+            </tr>
+            <tr>
+                <td>Peso</td>
+                <td><input type="number" id="mass" required></td>
+            </tr>
+            <tr>
+                <td>Cor do Cabelo</td>
+                <td><input type="text" id="hair_color"></td>
+            </tr>
+            <tr>
+                <td>Cor da Pele</td>
+                <td><input type="text" id="skin_color"></td>
+            </tr>
+            <tr>
+                <td>Cor dos Olhos</td>
+                <td><input type="text" id="eye_color"></td>
+            </tr>
+            <tr>
+                <td>Ano de Nascimento</td>
+                <td><input type="text" id="birth_year" required></td>
+            </tr>
+            <tr>
+                <td>Gênero</td>
+                <td>
+                    <select id="gender" required>
+                        <option value="">Selecione</option>
+                        <option value="male">Masculino</option>
+                        <option value="female">Feminino</option>
+                        <option value="other">Outro</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Mundo Natal</td>
+                <td><input type="text" id="homeworld"></td>
+            </tr>
+            <tr>
+                <td>Filmes (JSON)</td>
+                <td><textarea id="films" rows="3" placeholder='Exemplo: ["https://swapi.dev/api/films/1/", "https://swapi.dev/api/films/2/"]'></textarea></td>
+            </tr>
+            <tr>
+                <td>Espécies (JSON)</td>
+                <td><textarea id="species" rows="3" placeholder='Exemplo: ["https://swapi.dev/api/species/1/"]'></textarea></td>
+            </tr>
+            <tr>
+                <td>Veículos (JSON)</td>
+                <td><textarea id="vehicles" rows="3" placeholder='Exemplo: ["https://swapi.dev/api/vehicles/14/", "https://swapi.dev/api/vehicles/30/"]'></textarea></td>
+            </tr>
+            <tr>
+                <td>Naves Estelares (JSON)</td>
+                <td><textarea id="starships" rows="3" placeholder='Exemplo: ["https://swapi.dev/api/starships/12/", "https://swapi.dev/api/starships/21/"]'></textarea></td>
+            </tr>
+        </table>
+        <div class="error" id="error-message"></div>
+        <button type="submit" class="btn-confirmar">Confirmar Cadastro</button>
+        <a href="/" class="btn-voltar">Voltar</a>
+    </form>
+
+    <script>
+        document.getElementById('cadastro-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Evita o envio do formulário padrão
+            
+            const data = {
+                name: document.getElementById('name').value,
+                height: document.getElementById('height').value,
+                mass: document.getElementById('mass').value,
+                hair_color: document.getElementById('hair_color').value,
+                skin_color: document.getElementById('skin_color').value,
+                eye_color: document.getElementById('eye_color').value,
+                birth_year: document.getElementById('birth_year').value,
+                gender: document.getElementById('gender').value,
+                homeworld: document.getElementById('homeworld').value,
+                films: parseJSONInput('films'),
+                species: parseJSONInput('species'),
+                vehicles: parseJSONInput('vehicles'),
+                starships: parseJSONInput('starships')
+            };
+
+            // Verifica se os campos JSON estão válidos
+            if (!data.films || !data.species || !data.vehicles || !data.starships) {
+                document.getElementById('error-message').innerText = 'Formato JSON inválido.';
+                return;
+            }
+
+            // Envia a requisição POST para salvar o personagem
+            fetch('/personagem/salvar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message); // Exibe mensagem de sucesso
+                window.location.href = '/'; // Redireciona para a página principal
+            })
+            .catch(error => {
+                document.getElementById('error-message').innerText = error.message; // Exibe mensagem de erro
+            });
+        });
+
+        function parseJSONInput(id) {
+            try {
+                const value = document.getElementById(id).value;
+                return JSON.parse(value || '[]'); // Retorna um array vazio se não houver valor
+            } catch {
+                return null; // Retorna null em caso de erro
+            }
+        }
+    </script>
+</body>
+</html>

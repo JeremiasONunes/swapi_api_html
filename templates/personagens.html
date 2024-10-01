@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personagens Star Wars</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-voltar {
+            margin: 20px 0; /* Margem superior e inferior de 20px */
+            padding: 10px 15px; /* Padding do botão */
+            background-color: #4CAF50; /* Cor do fundo do botão */
+            color: white; /* Cor do texto */
+            border: none; /* Remover bordas */
+            border-radius: 5px; /* Bordas arredondadas */
+            cursor: pointer; /* Cursor em forma de mão ao passar por cima */
+            text-decoration: none; /* Remover sublinhado do link */
+            display: inline-block; /* Permitir padding e margin */
+        }
+        .btn-voltar:hover {
+            background-color: #45a049; /* Cor do botão ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <h1>Personagens Star Wars</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Gênero</th>
+            <th>Cor dos Olhos</th>
+            <th>Altura</th>
+            <th>Peso</th>
+            <th>Ano de Nascimento</th>
+        </tr>
+        {% for personagem in personagens %}
+        <tr>
+            <td>{{ personagem.id }}</td>
+            <td>{{ personagem.name }}</td>
+            <td>{{ personagem.gender }}</td>
+            <td>{{ personagem.eye_color }}</td>
+            <td>{{ personagem.height }}</td>
+            <td>{{ personagem.mass }}</td>
+            <td>{{ personagem.birth_year }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <!-- Botão com margem superior e inferior -->
+    <div>
+        <a href="/" class="btn-voltar">Voltar</a>
+    </div>
+</body>
+</html>

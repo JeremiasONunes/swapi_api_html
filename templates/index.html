@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SWAPI - Bem-vindo à API Star Wars</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center">Bem-vindo à API Star Wars</h1>
+        <p class="text-center">Aqui você pode acessar diferentes dados do universo Star Wars!</p>
+
+        <div id="buttons-list" class="mt-5">
+            <h2>Personagens</h2>
+            <div class="btn-group">
+                <a href="/personagens" class="btn btn-primary">Listar Todos</a>
+                <a href="/personagem/id" class="btn btn-secondary">Buscar por ID</a>
+                <a href="/personagem/salvar" class="btn btn-success">Adicionar</a>
+                <a href="/personagem/delete" class="btn btn-danger">Deletar</a>
+            </div>
+
+            <h2>Espécies</h2>
+            <div class="btn-group">
+                <a href="/species/get_species" class="btn btn-primary">Listar Todos</a>
+                <a href="/species/get_especie" class="btn btn-secondary">Buscar por ID</a>
+                <a href="/species/adicionar_especie_form" class="btn btn-success">Adicionar</a>
+                <a href="/species/delete_especie" class="btn btn-danger">Deletar</a>
+            </div>
+
+            <h2>Naves</h2>
+            <div class="btn-group">
+                <a href="/starships/get_naves" class="btn btn-primary">Listar Todos</a>
+                <a href="/starships/get_nave" class="btn btn-secondary">Buscar por ID</a>
+                <a href="/starships/adicionar_nave_form" class="btn btn-success">Adicionar</a>
+                <a href="/starships/delete_nave" class="btn btn-danger">Deletar</a>
+            </div>
+
+            <h2>Veículos</h2>
+            <div class="btn-group">
+                <a href="/vehicles/get_vehicles" class="btn btn-primary">Listar Todos</a>
+                <a href="/vehicles/get_vehicle" class="btn btn-secondary">Buscar por ID</a>
+                <a href="/vehicles/adicionar_vehicle_form" class="btn btn-success">Adicionar</a>
+                <a href="/vehicles/delete_vehicle" class="btn btn-danger">Deletar</a>
+            </div>
+
+            <h2>Favoritos</h2>
+            <div class="btn-group">
+                <a href="/favorites/get_favorites" class="btn btn-primary">Listar Todos</a>
+                <a href="/favorites/get_favorito" class="btn btn-secondary">Buscar por ID</a>
+                <a href="/favorites/adicionar_favorito_form" class="btn btn-success">Adicionar</a>
+                <a href="/favorites/delete_favorito" class="btn btn-danger">Deletar</a>
+            </div>
+
+            <h2>Filmes</h2>
+            <div class="btn-group">
+                <a href="/movies/get_filmes" class="btn btn-primary">Listar Todos</a>
+                <a href="/movies/get_filme" class="btn btn-secondary">Buscar por ID</a>
+                <a href="/movies/adicionar_filme_form" class="btn btn-success">Adicionar</a>
+                <a href="/movies/delete_filme" class="btn btn-danger">Deletar</a>
+            </div>
+
+            <!-- Adicione mais se necessário para outros tipos de itens -->
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deletar Personagem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #28a745;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-right: 10px; /* Espaçamento entre os botões */
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .personagem-info {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .back-button {
+            background-color: #007bff; /* Cor azul para o botão de voltar */
+        }
+        .back-button:hover {
+            background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* Espaço entre os botões */
+            margin-top: 20px; /* Espaço acima dos botões */
+        }
+    </style>
+    <script>
+        async function fetchPersonagem() {
+            const id = document.getElementById("personagem-id").value;
+            const response = await fetch(`/personagens/${id}`);
+            if (response.ok) {
+                const personagem = await response.json();
+                document.getElementById("personagem-info").innerHTML = `
+                    <h2>${personagem.name}</h2>
+                    <p>Altura: ${personagem.height}</p>
+                    <p>Massa: ${personagem.mass}</p>
+                    <p>Cor do cabelo: ${personagem.hair_color}</p>
+                    <p>Cor da pele: ${personagem.skin_color}</p>
+                    <p>Cor dos olhos: ${personagem.eye_color}</p>
+                    <p>Ano de nascimento: ${personagem.birth_year}</p>
+                    <p>Gênero: ${personagem.gender}</p>
+                `;
+                document.getElementById("delete-button").style.display = "block";
+            } else {
+                alert("Personagem não encontrado!");
+                document.getElementById("personagem-info").innerHTML = "";
+                document.getElementById("delete-button").style.display = "none";
+            }
+        }
+
+        async function deletePersonagem() {
+            const id = document.getElementById("personagem-id").value;
+            const response = await fetch(`/personagens/${id}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                alert("Personagem deletado com sucesso!");
+                document.getElementById("personagem-info").innerHTML = "";
+                document.getElementById("delete-button").style.display = "none";
+                document.getElementById("personagem-id").value = "";
+            } else {
+                alert("Erro ao deletar personagem!");
+            }
+        }
+
+        function goBack() {
+            window.location.href = '/'; // Redireciona para a rota principal
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Deletar Personagem</h1>
+        <div>
+            <label for="personagem-id">ID do Personagem:</label>
+            <input type="number" id="personagem-id" required>
+            <button onclick="fetchPersonagem()">Buscar</button>
+        </div>
+        <div id="personagem-info" class="personagem-info"></div>
+        <div class="button-container">
+            <button id="delete-button" style="display:none;" onclick="deletePersonagem()">Deletar Personagem</button>
+            <button class="back-button" onclick="goBack()">Voltar à Página Principal</button> <!-- Botão de voltar -->
+        </div>
+    </div>
+</body>
+</html>
